@@ -6,35 +6,28 @@ from auth import get_emsi_auth
 comma = ","
 
 response = get_emsi_auth()
-print("response",response)
+
 converted_response = json.loads(response)
-# print("converted response", converted_response)
+
 access_token = converted_response["access_token"]
 
-# print("access token", access_token)
 
 url = "https://emsiservices.com/skills/versions/latest/skills"
 
 # querystring = {"q":".NET","typeIds":"ST1,ST2","fields":"id,name,type,infoUrl","limit":"5"}
-# querystring = {"limit": "5"}
 
 headers = {"Authorization": "Bearer " + access_token}
-
-# print("headers", headers)
 
 # skill_response = requests.request("GET", url, headers=headers, params=querystring)
 skill_response = requests.request("GET", url, headers=headers)
 
-# print("skill response", skill_response.text)
-
 converted_skill_response = json.loads(str(skill_response.text))
-# print("converted skill response", converted_skill_response)
 
 with open("output.csv", "w") as outfile:
 
     # title_string = "Attribution Name, Attribution Text, TypeID, Type Name, SkillID, Skill Name, TagKey, TagValue, infoUrl, IsSoftware, IsLanguage, Skill Description, Description Source, Category ID, Category Name, Sub Category ID, Sub Category Name "
     title_string = "Attribution Name, Attribution Text,TypeID, Type Name, SkillID, Skill Name, infoUrl "
-    # print(title_string)
+   
     outfile.write(title_string)
     attributions = converted_skill_response["attributions"]
     for attrow in attributions:
@@ -99,6 +92,6 @@ with open("output.csv", "w") as outfile:
             # + comma
             # + subcategory_name
         )
-        # print(out_string)
+        
         outfile.write("\n")
         outfile.write(out_string)
