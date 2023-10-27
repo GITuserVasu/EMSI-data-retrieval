@@ -1,0 +1,3 @@
+Client ID: YOUR EMSI CLIENT ID
+Secret: YOUR EMSI SECRET
+Scope: emsi_open <CHANGE IF NEEDED>
